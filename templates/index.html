@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>城市天气查询</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+    <div class="app-shell">
+        <header>
+            <h1>城市天气查询</h1>
+            <p>输入城市名称，查看当前天气和图标。</p>
+        </header>
+
+        <main>
+            <form method="post" class="weather-form">
+                <label for="city">城市名称</label>
+                <input id="city" name="city" type="text" placeholder="例如：Beijing" value="{{ city or '' }}" required />
+                <button type="submit">查询天气</button>
+            </form>
+
+            {% if error %}
+            <div class="alert">{{ error }}</div>
+            {% endif %}
+
+            {% if weather %}
+            <section class="weather-card">
+                <div class="weather-card-header">
+                    <img src="{{ weather.icon_url }}" alt="天气图标" />
+                    <div>
+                        <h2>{{ weather.city }}</h2>
+                        <p>{{ weather.description }}</p>
+                    </div>
+                </div>
+                <div class="weather-details">
+                    <span class="temperature">{{ weather.temperature }}°C</span>
+                </div>
+            </section>
+            {% endif %}
+        </main>
+
+        <footer>
+            <p>使用 OpenWeatherMap 实时天气数据</p>
+        </footer>
+    </div>
+</body>
+
+</html>
