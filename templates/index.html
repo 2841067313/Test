@@ -19,6 +19,16 @@
             <form method="post" class="weather-form">
                 <label for="city">城市名称</label>
                 <input id="city" name="city" type="text" placeholder="例如：Beijing" value="{{ city or '' }}" required />
+                <div class="unit-switch">
+                    <label>
+                        <input type="radio" name="units" value="metric" {% if units !='imperial' %}checked{% endif %} />
+                        摄氏度
+                    </label>
+                    <label>
+                        <input type="radio" name="units" value="imperial" {% if units=='imperial' %}checked{% endif
+                            %} /> 华氏度
+                    </label>
+                </div>
                 <button type="submit">查询天气</button>
             </form>
 
@@ -36,8 +46,23 @@
                     </div>
                 </div>
                 <div class="weather-details">
-                    <span class="temperature">{{ weather.temperature }}°C</span>
+                    <span class="temperature">{{ weather.temperature }}{{ weather.temp_unit }}</span>
+                    <div class="weather-metrics">
+                        <div><strong>湿度</strong> {{ weather.humidity }}%</div>
+                        <div><strong>风速</strong> {{ weather.wind_speed }} {{ weather.wind_unit }}</div>
+                    </div>
                 </div>
+            </section>
+            {% endif %}
+
+            {% if recent_searches %}
+            <section class="history-card">
+                <h3>最近查询</h3>
+                <ul>
+                    {% for item in recent_searches %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
             </section>
             {% endif %}
         </main>
